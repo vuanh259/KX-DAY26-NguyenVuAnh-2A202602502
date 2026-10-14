@@ -1,0 +1,69 @@
+<!doctype html><html lang="vi"><meta charset="utf-8">
+<title>03a-auth-fail — Lab Day 26</title><style>
+body{background:#101820;color:#e9f1f7;margin:16px;font:12px/1.25 Consolas,monospace}
+h1{font-size:22px;color:#7dd3fc;margin:0 0 8px}p{color:#b7c9d8;margin:6px 0}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;border-top:1px solid #405365;padding-top:14px;font:inherit}
+</style><h1>03a-auth-fail</h1><p>Actual CLI output / Kết quả chạy thật</p>
+<p>auth_client.py with wrong-token (expected failure) | exit code: 1</p>
+<p>Captured: 2026-10-14T11:54:55+07:00</p>
+<pre>INFO:     127.0.0.1:57451 - &quot;POST /mcp HTTP/1.1&quot; 401 Unauthorized
+
+  + Exception Group Traceback (most recent call last):
+  |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\03-production\auth_client.py&quot;, line 49, in &lt;module&gt;
+  |     asyncio.run(main())
+  |     ~~~~~~~~~~~^^^^^^^^
+  |   File &quot;C:\Users\vuanh\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py&quot;, line 204, in run
+  |     return runner.run(main)
+  |            ~~~~~~~~~~^^^^^^
+  |   File &quot;C:\Users\vuanh\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\runners.py&quot;, line 127, in run
+  |     return self._loop.run_until_complete(task)
+  |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  |   File &quot;C:\Users\vuanh\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\asyncio\base_events.py&quot;, line 719, in run_until_complete
+  |     return future.result()
+  |            ~~~~~~~~~~~~~^^
+  |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\03-production\auth_client.py&quot;, line 32, in main
+  |     async with streamable_http_client(SERVER_URL, http_client=http_client) as (
+  |                ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File &quot;C:\Users\vuanh\AppData\Roaming\uv\python\cpython-3.14-windows-x86_64-none\Lib\contextlib.py&quot;, line 235, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\.venv\Lib\site-packages\mcp\client\streamable_http.py&quot;, line 771, in streamable_http_client
+  |     anyio.create_task_group() as tg,
+  |     ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\.venv\Lib\site-packages\anyio\_backends\_asyncio.py&quot;, line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         &quot;unhandled errors in a TaskGroup&quot;, self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Exception Group Traceback (most recent call last):
+    |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\.venv\Lib\site-packages\mcp\client\streamable_http.py&quot;, line 788, in streamable_http_client
+    |     yield read_stream, write_stream
+    |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\03-production\auth_client.py&quot;, line 36, in main
+    |     async with ClientSession(read, write) as session:
+    |                ~~~~~~~~~~~~~^^^^^^^^^^^^^
+    |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\.venv\Lib\site-packages\mcp\client\session.py&quot;, line 514, in __aexit__
+    |     result = await self._task_group.__aexit__(exc_type, exc_val, exc_tb)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\.venv\Lib\site-packages\anyio\_backends\_asyncio.py&quot;, line 847, in __aexit__
+    |     raise BaseExceptionGroup(
+    |         &quot;unhandled errors in a TaskGroup&quot;, self._exceptions
+    |     ) from None
+    | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+    +-+---------------- 1 ----------------
+      | Traceback (most recent call last):
+      |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\03-production\auth_client.py&quot;, line 37, in main
+      |     await session.initialize()
+      |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\.venv\Lib\site-packages\mcp\client\session.py&quot;, line 654, in initialize
+      |     result = await self.send_request(
+      |              ^^^^^^^^^^^^^^^^^^^^^^^^
+      |     ...&lt;9 lines&gt;...
+      |     )
+      |     ^
+      |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\.venv\Lib\site-packages\mcp\client\session.py&quot;, line 586, in send_request
+      |     raw = await self._dispatcher.send_raw_request(method, data.get(&quot;params&quot;), opts)
+      |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      |   File &quot;E:\VinUni20K\TRACK3\DAY26\KX-DAY26-NguyenVuAnh-2A202602502\.venv\Lib\site-packages\mcp\shared\jsonrpc_dispatcher.py&quot;, line 461, in send_raw_request
+      |     raise MCPError(code=outcome.code, message=outcome.message, data=outcome.data)
+      | mcp.shared.exceptions.MCPError: Server returned an error response
+      +------------------------------------
+</pre></html>

@@ -1,5 +1,36 @@
 # Phân biệt MCP và Function Calling
 
+## Bài nộp Lab Day 26 — Nguyễn Vũ Anh — 2A202602502
+
+Repo cá nhân: [KX-DAY26-NguyenVuAnh-2A202602502](https://github.com/vuanh259/KX-DAY26-NguyenVuAnh-2A202602502).
+
+Hướng dẫn PowerShell: [HUONG-DAN-CHAY.md](HUONG-DAN-CHAY.md).
+Kết quả từng lần chạy CLI được lưu nguyên văn tại [evidence/](evidence/).
+Các ảnh CLI là ảnh chụp trình duyệt hiển thị output đã thu từ tiến trình thật;
+không phải ảnh cửa sổ terminal. Hai ảnh ADK được chụp trực tiếp giao diện chat.
+
+| Bằng chứng | Nội dung |
+|---|---|
+| [01-function-calling](screenshots/01-function-calling.png) | Model yêu cầu tool, app chạy hàm và model tổng hợp |
+| [02-mcp-client](screenshots/02-mcp-client.png) | Khám phá tool và gọi ba thành phố qua stdio |
+| [03a-auth-ok](screenshots/03a-auth-ok.png) | Bearer token hợp lệ gọi được tool |
+| [03a-auth-fail](screenshots/03a-auth-fail.png) | Token sai bị server từ chối, HTTP 401 |
+| [03b-registry](screenshots/03b-registry.png) | Chọn weather tool v2 từ registry |
+| [03c-versioning](screenshots/03c-versioning.png) | Metadata, tool v1 và v2 có forecast |
+| [04-verify-setup](screenshots/04-verify-setup.png) | Cấu hình ADK và handshake MCP, health check |
+| [04-adk-current](screenshots/04-adk-current.png) | ADK gọi thời tiết hiện tại từ WeatherAPI |
+| [04-adk-forecast](screenshots/04-adk-forecast.png) | ADK gọi dự báo ba ngày từ WeatherAPI |
+
+`.env` ở gốc chứa `GEMINI_API_KEY`, `WEATHERAPI_KEY` và `MCP_SERVER_URL`.
+Script `run-weather.ps1` chuyển Gemini key thành `GOOGLE_API_KEY` cho ADK
+trong tiến trình chạy. Không đưa key vào code hay Git.
+
+Hai môi trường `uv` của Lab 04 được cài bằng `uv sync --python 3.12`.
+Môi trường gốc cho bước 01–03 dùng MCP SDK v2; Lab 04 dùng SDK v1 theo
+dependency của ADK. Không trộn hai môi trường này.
+
+Cloud Run là phần tùy chọn, không triển khai trong bài này.
+
 Đây là hai khái niệm hay bị nhầm lẫn nhưng thực ra ở **hai tầng khác nhau**, và **bổ sung cho nhau** chứ không thay thế.
 
 ## Cấu trúc repo

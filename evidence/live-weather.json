@@ -1,0 +1,4 @@
+{
+  "get_current_weather": "\nCurrent Weather for Hanoi, , Vietnam:\n\nTemperature: 32.9°C (91.2°F)\nFeels like: 35.4°C (95.7°F)\nCondition: Sunny\nHumidity: 47%\nWind: 3.6 km/h (2.2 mph) SW\nPressure: 1016.0 mb\nUV Index: 6.9\nVisibility: 10.0 km\n\nLast updated: 2026-10-14 11:45\n",
+  "get_forecast": "Weather Forecast for Hanoi, , Vietnam:\n---\n\n2026-10-14:\nHigh: 34.4°C (93.9°F)\nLow: 24.9°C (76.8°F)\nCondition: Smoky haze\nChance of Rain: 5%\nMax Wind: 18.7 km/h\nUV Index: 7.6\n\n---\n\n2026-10-15:\nHigh: 33.8°C (92.8°F)\nLow: 24.7°C (76.5°F)\nCondition: Smoky haze\nChance of Rain: 6%\nMax Wind: 19.4 km/h\nUV Index: 7.4\n\n---\n\n2026-10-16:\nHigh: 33.7°C (92.6°F)\nLow: 24.3°C (75.7°F)\nCondition: Smoky haze\nChance of Rain: 9%\nMax Wind: 20.9 km/h\nUV Index: 8.3\n"
+}

@@ -1,0 +1,49 @@
+<!doctype html><html lang="vi"><meta charset="utf-8">
+<title>03c-versioning — Lab Day 26</title><style>
+body{background:#101820;color:#e9f1f7;margin:16px;font:12px/1.25 Consolas,monospace}
+h1{font-size:22px;color:#7dd3fc;margin:0 0 8px}p{color:#b7c9d8;margin:6px 0}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;border-top:1px solid #405365;padding-top:14px;font:inherit}
+</style><h1>03c-versioning</h1><p>Actual CLI output / Kết quả chạy thật</p>
+<p>03-production &gt; python versioned_client.py | exit code: 0</p>
+<p>Captured: 2026-10-14T11:54:48+07:00</p>
+<pre>Server: weather-v2 v2.0.0
+Deprecated tools: [&#x27;get_weather&#x27;]
+Migration: Chuyển từ get_weather sang get_weather_v2. Tham số &#x27;city&#x27; giữ nguyên, thêm include_forecast và units.
+
+Tools:
+  - get_weather: [v1] Lấy thời tiết hiện tại — trả chuỗi đơn giản. Deprecated, dùng get_weather_v2.
+  - get_weather_v2: [v2] Lấy thời tiết chi tiết — JSON, hỗ trợ forecast và đơn vị đo.
+
+Args:
+    city: Tên thành phố (ví dụ: Hanoi, Danang)
+    include_forecast: Có trả thêm dự báo 2 ngày tới không (mặc định: False)
+    units: Đơn vị nhiệt độ — &quot;celsius&quot; hoặc &quot;fahrenheit&quot; (mặc định: celsius)
+
+
+[v1] get_weather(&#x27;Hanoi&#x27;):
+  Hanoi: 29°C, trời mưa
+
+[v2] get_weather_v2(&#x27;Hanoi&#x27;, forecast=True):
+  {
+  &quot;api_version&quot;: &quot;2.0&quot;,
+  &quot;city&quot;: &quot;Hanoi&quot;,
+  &quot;temp&quot;: 29,
+  &quot;units&quot;: &quot;celsius&quot;,
+  &quot;condition&quot;: &quot;trời mưa&quot;,
+  &quot;humidity&quot;: 82,
+  &quot;wind_speed_kmh&quot;: 12,
+  &quot;timestamp&quot;: &quot;2026-10-14T04:54:48.481028+00:00&quot;,
+  &quot;forecast&quot;: [
+    {
+      &quot;day&quot;: &quot;tomorrow&quot;,
+      &quot;temp&quot;: 27,
+      &quot;condition&quot;: &quot;mưa nhẹ&quot;
+    },
+    {
+      &quot;day&quot;: &quot;day_after&quot;,
+      &quot;temp&quot;: 31,
+      &quot;condition&quot;: &quot;nắng&quot;
+    }
+  ]
+}
+</pre></html>

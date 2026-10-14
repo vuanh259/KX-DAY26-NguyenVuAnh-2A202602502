@@ -11,7 +11,7 @@ def check_environment():
     """Check if .env file exists and is configured"""
     print("🔍 Checking environment configuration...")
     
-    env_file = Path(".env")
+    env_file = Path(__file__).parent / ".env"
     if not env_file.exists():
         print("❌ .env file not found")
         print("   Run: echo 'GOOGLE_API_KEY=your_key' > .env")
@@ -19,7 +19,7 @@ def check_environment():
     
     # Check if GOOGLE_API_KEY is set
     from dotenv import load_dotenv
-    load_dotenv()
+    load_dotenv(env_file)
     
     api_key = os.getenv("GOOGLE_API_KEY")
     if not api_key or api_key == "your_google_api_key_here":
@@ -27,7 +27,7 @@ def check_environment():
         print("   Get key from: https://aistudio.google.com/apikey")
         return False
     
-    print(f"✅ GOOGLE_API_KEY configured ({api_key[:10]}...)")
+    print("✅ GOOGLE_API_KEY configured (hidden)")
     return True
 
 def check_dependencies():
@@ -88,16 +88,27 @@ def check_mcp_server():
     server_url = os.getenv("MCP_SERVER_URL", "http://localhost:8085/mcp")
 
     try:
-        import httpx
+        import asyncio
+        from mcp import ClientSession
+        from mcp.client.streamable_http import streamablehttp_client
 
-        response = httpx.get(server_url, timeout=10.0)
-        # GET thuần lên endpoint MCP thường bị từ chối (400/405/406) vì thiếu
-        # header/session MCP — nhưng có phản hồi nghĩa là server đang chạy.
-        if response.status_code < 500:
-            print(f"✅ MCP server reachable at {server_url} (HTTP {response.status_code})")
-            return True
-        print(f"⚠️  MCP server returned status {response.status_code}")
-        return False
+        async def verify_protocol():
+            async with streamablehttp_client(server_url) as streams:
+                async with ClientSession(streams[0], streams[1]) as session:
+                    await session.initialize()
+                    result = await session.list_tools()
+                    names = {tool.name for tool in result.tools}
+                    expected = {"get_current_weather", "get_forecast", "health_check"}
+                    if not expected.issubset(names):
+                        raise RuntimeError("Weather tools missing from MCP server")
+                    health = await session.call_tool("health_check", {})
+                    if health.isError:
+                        raise RuntimeError("MCP health check failed")
+                    print(f"✅ MCP handshake and health check passed at {server_url}")
+                    print("   Tools: " + ", ".join(sorted(names)))
+                    return True
+
+        return asyncio.run(verify_protocol())
 
     except Exception as e:
         print(f"❌ Cannot reach MCP server at {server_url}: {e}")
